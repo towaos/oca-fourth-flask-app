@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>回答一覧 - 管理者画面</title>
+</head>
+<body>
+  <div class="dashboard-container">
+    <div class="header-nav">
+      <h1>回答一覧</h1>
+      <div class="nav-links">
+        <a href="{{ url_for('admin_logout') }}" class="btn btn-secondary">ログアウト</a>
+        <a href="{{ url_for('delete_admin_user') }}" class="btn btn-danger" onclick="return confirm('管理者登録を解除しますか？')">管理者登録解除</a>
+      </div>
+    </div>
+    
+    <div class="actions">
+      {% if surveys %}
+        <a href="{{ url_for('download_csv') }}" class="btn btn-success">ダウンロード</a>
+        <a href="{{ url_for('delete_all_surveys') }}" class="btn btn-danger" onclick="return confirmDeleteAll()">全て削除</a>
+      {% endif %}
+    </div>
+    
+    {% if surveys %}
+      <table>
+        <thead>
+          <tr>
+            <th>回答日時</th>
+            <th>名前</th>
+            <th>メールアドレス</th>
+            <th>年齢</th>
+            <th>興味のあるプログラム言語</th>
+            <th>学習に使っているパソコン</th>
+            <th>パソコンメーカー</th>
+            <th>コメント</th>
+            <th>処理</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for survey in surveys %}
+            <tr>
+              <td>{{ survey[1] }}</td>
+              <td>{{ survey[2] | e }}</td>
+              <td>{{ survey[3] | e }}</td>
+              <td>{{ survey[4] }}</td>
+              <td>{{ survey[5] | e }}</td>
+              <td>{{ survey[6] | e }}</td>
+              <td>{{ survey[7] | e }}</td>
+              <td class="comment-cell">{{ survey[8] | e }}</td>
+              <td>
+                <a href="{{ url_for('delete_survey', survey_id=survey[0]) }}" 
+                   class="btn btn-danger btn-sm"
+                   onclick="return confirmDelete({{ survey[0] }}, '{{ survey[2] | e }}')">削除</a>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <table>
+        <thead>
+          <tr>
+            <th>回答日時</th>
+            <th>名前</th>
+            <th>メールアドレス</th>
+            <th>年齢</th>
+            <th>興味のあるプログラミング言語</th>
+            <th>学習に使っているパソコン</th>
+            <th>パソコンメーカー</th>
+            <th>コメント</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td colspan="8" class="no-data">まだアンケートの回答がありません</td>
+          </tr>
+        </tbody>
+      </table>
+    {% endif %}
+  </div>
+    <script>
+    function confirmDelete(id, name) {
+      return confirm(`「${name}」のアンケートを削除しますか？`);
+    }
+    
+    function confirmDeleteAll() {
+      return confirm('全てのアンケートを削除しますか？この操作は取り消せません。');
+    }
+  </script>
+</body>
+</html>

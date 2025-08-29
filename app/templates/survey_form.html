@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>アンケート</title>
+</head>
+<body>
+  <div class="form-container">
+    <h1>アンケート</h1>
+    
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <div class="error-messages">
+          <ul style="margin: 0; padding-left: 20px;">
+            {% for message in messages %}
+              <li>{{ message }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+      {% endif %}
+    {% endwith %}
+    
+    <form method="POST" action="{{ url_for('submit_survey') }}">
+      <div class="form-group">
+        <label for="name">名前：<span class="required">*</span></label>
+        <input type="text" id="name" name="name" value="{{ name or '' }}">
+      </div>
+      
+      <div class="form-group">
+        <label for="email">メールアドレス：<span class="required">*</span></label>
+        <input type="email" id="email" name="email" value="{{ email or '' }}">
+      </div>
+      
+      <div class="form-group">
+        <label for="age">年齢：<span class="required">*</span></label>
+        <input type="number" id="age" name="age" min="18" max="110" value="{{ age or '' }}">
+      </div>
+      
+      <div class="form-group">
+        <label>興味のあるプログラム言語：</label>
+        <div class="checkbox-group">
+          <div class="checkbox-item">
+            <input type="checkbox" id="php" name="languages" value="PHP" 
+                   {% if languages and 'PHP' in languages %}checked{% endif %}>
+            <label for="php">PHP</label>
+          </div>
+          <div class="checkbox-item">
+            <input type="checkbox" id="javascript" name="languages" value="JavaScript"
+                   {% if languages and 'JavaScript' in languages %}checked{% endif %}>
+            <label for="javascript">JavaScript</label>
+          </div>
+          <div class="checkbox-item">
+            <input type="checkbox" id="python" name="languages" value="Python"
+                   {% if languages and 'Python' in languages %}checked{% endif %}>
+            <label for="python">Python</label>
+          </div>
+          <div class="checkbox-item">
+            <input type="checkbox" id="java" name="languages" value="Java"
+                   {% if languages and 'Java' in languages %}checked{% endif %}>
+            <label for="java">Java</label>
+          </div>
+          <div class="checkbox-item">
+            <input type="checkbox" id="cpp" name="languages" value="C/C++"
+                   {% if languages and 'C/C++' in languages %}checked{% endif %}>
+            <label for="cpp">C/C++</label>
+          </div>
+          <div class="checkbox-item">
+            <input type="checkbox" id="csharp" name="languages" value="C#"
+                   {% if languages and 'C#' in languages %}checked{% endif %}>
+            <label for="csharp">C#</label>
+          </div>
+          <div class="checkbox-item">
+            <input type="checkbox" id="ruby" name="languages" value="Ruby"
+                   {% if languages and 'Ruby' in languages %}checked{% endif %}>
+            <label for="ruby">Ruby</label>
+          </div>
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <label>学習に使っているパソコン：<span class="required">*</span></label>
+        <div class="radio-group">
+          <div class="radio-item">
+            <input type="radio" id="desktop" name="pc_type" value="デスクトップPC"
+                   {% if pc_type == 'デスクトップPC' %}checked{% else %}{% if not pc_type %}checked{% endif %}{% endif %}>
+            <label for="desktop">デスクトップPC</label>
+          </div>
+          <div class="radio-item">
+            <input type="radio" id="notebook" name="pc_type" value="ノートPC"
+                   {% if pc_type == 'ノートPC' %}checked{% endif %}>
+            <label for="notebook">ノートPC</label>
+          </div>
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <label for="pc_maker">パソコンメーカー：</label>
+        <select id="pc_maker" name="pc_maker">
+          <option value="選択してください" {% if not pc_maker or pc_maker == '選択してください' %}selected{% endif %}>選択してください</option>
+          <option value="Lenovo" {% if pc_maker == 'Lenovo' %}selected{% endif %}>Lenovo</option>
+          <option value="DELL" {% if pc_maker == 'DELL' %}selected{% endif %}>DELL</option>
+          <option value="HP" {% if pc_maker == 'HP' %}selected{% endif %}>HP</option>
+          <option value="Apple" {% if pc_maker == 'Apple' %}selected{% endif %}>Apple</option>
+          <option value="Dynabook" {% if pc_maker == 'Dynabook' %}selected{% endif %}>Dynabook</option>
+          <option value="NEC" {% if pc_maker == 'NEC' %}selected{% endif %}>NEC</option>
+          <option value="VAIO" {% if pc_maker == 'VAIO' %}selected{% endif %}>VAIO</option>
+          <option value="ASUS" {% if pc_maker == 'ASUS' %}selected{% endif %}>ASUS</option>
+          <option value="自作" {% if pc_maker == '自作' %}selected{% endif %}>自作</option>
+          <option value="その他" {% if pc_maker == 'その他' %}selected{% endif %}>その他</option>
+        </select>
+      </div>
+      
+      <div class="form-group">
+        <label for="comment">コメント：</label>
+        <textarea id="comment" name="comment">{{ comment or '' }}</textarea>
+      </div>
+      
+      <button type="submit" class="submit-btn">送信</button>
+    </form>
+  </div>
+</body>
+</html>

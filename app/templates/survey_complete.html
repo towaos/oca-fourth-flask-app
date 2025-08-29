@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>アンケート送信完了</title>
+</head>
+<body>
+  <div class="complete-container">
+    <h1>ご回答ありがとうございました。</h1>
+    
+    <div class="survey-data">
+      <p><span class="data-label">名前：</span>{{ name }}</p>
+      <p><span class="data-label">メールアドレス：</span>{{ email }}</p>
+      <p><span class="data-label">年齢：</span>{{ age }}</p>
+      <p><span class="data-label">興味のあるプログラミング言語：</span>{{ languages or 'なし' }}</p>
+      <p><span class="data-label">学習に使っているパソコン：</span>{{ pc_type }}</p>
+      <p><span class="data-label">パソコンメーカー：</span>{{ pc_maker }}</p>
+      <p><span class="data-label">コメント：</span></p>
+      <div style="margin-left: 10px; white-space: pre-wrap;">{{ comment or 'なし' }}</div>
+    </div>
+    
+    <a href="{{ url_for('index') }}" class="home-link">トップ</a>
+  </div>
+</body>
+</html>

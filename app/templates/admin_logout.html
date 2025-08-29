@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ログアウト完了</title>
+</head>
+<body>
+  <div class="logout-container">
+    <h1>ログアウト完了</h1>
+    
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        {% for message in messages %}
+          <div class="message">
+            {{ message }}
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+    
+    <div>
+      <a href="{{ url_for('admin_login') }}" class="btn">ログイン</a>
+      <a href="{{ url_for('index') }}" class="btn btn-secondary">アンケートトップ</a>
+    </div>
+  </div>
+</body>
+</html>

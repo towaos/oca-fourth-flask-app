@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>管理者ログイン</title>
+</head>
+<body>
+  <div class="login-container">
+    <h1>ログイン</h1>
+    
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <div class="error-messages">
+          <ul style="margin: 0; padding-left: 20px;">
+            {% for message in messages %}
+              <li>{{ message }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+      {% endif %}
+    {% endwith %}
+    
+    {% if admin_exists %}
+      <div class="register-info">
+        管理者はすでに登録済みです。
+      </div>
+    {% endif %}
+    
+    <form method="POST">
+      <div class="form-group">
+        <label for="username">管理者名：</label>
+        <input type="text" id="username" name="username" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="password">パスワード：</label>
+        <input type="password" id="password" name="password" required>
+      </div>
+      
+      <div class="button-group">
+        <button type="submit" class="btn">送信</button>
+      </div>
+    </form>
+    
+    {% if not admin_exists %}
+      <div class="button-group">
+        <a href="{{ url_for('admin_register') }}" class="btn btn-secondary">管理者登録</a>
+      </div>
+    {% endif %}
+  </div>
+</body>
+</html>
